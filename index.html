@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Decorate a Tree</title>
+    <link href='candy-cane-red-left.png' rel='shortcut icon' type='image/ico'>
+
+    <link href='style.css' rel='stylesheet'>
+    <script src='https://kit.fontawesome.com/57c0dd6a0a.js' crossorigin='anonymous'></script>
+    <link rel='preconnect' href='https://fonts.googleapis.com'>
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+    <link href='https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap' rel='stylesheet'>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src='/_vercel/insights/script.js'></script>
+
+    <meta property='og:title' content='Decorate a Tree'>
+    <meta property='og:description'
+        content='Decorate your own digital Christmas tree with various ornaments, candy canes, lights, and more.'>
+    <meta name='theme-color' content='#227322'>
+    <meta property='og:image' content='candy-cane-red-left.png'>
+</head>
+
+<body class='bg-white font-BalsamiqSans h-full overflow-hidden m-0'>
+
+    <div id='modal' class='hidden bg-black/50 fixed top-0 left-0 z-[70] w-full h-full overflow-auto px-6'>
+        <div class='text-3xl bg-gray-100 rounded-lg w-[36rem] px-10 py-9 m-auto'>
+            <h1 class='flex bg-transparent text-lg md:text-2xl text-red-500'>
+                Decorate a Tree works much better on larger screens.</h1>
+            <button onclick='closeModal()'
+                class='button md:text-xl hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90 border-l-2 rounded-md mt-4'>I
+                don't care</button>
+        </div>
+    </div>
+
+    <div id='decorDock' class='absolute w-full overflow-x-auto z-[60]'>
+        <button onclick='switchO()' id='switchO'
+            class='button decorB float-left border-l-2 md:bg-lightGreen/90 md:border-gray-400/90'>Ornaments</button>
+        <button onclick='switchC()' id='switchC'
+            class='button decorB float-left hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'>Candy
+            Canes</button>
+        <button onclick='switchF()' id='switchF'
+            class='button decorB float-left hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'>Flowers</button>
+        <button onclick='switchL()' id='switchL'
+            class='button decorB float-left hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'>Lights</button>
+        <button onclick='switchP()' id='switchP'
+            class='button decorB float-left hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'>Presents</button>
+        <button onclick='switchT()' id='switchT'
+            class='button decorB float-left md:rounded-tr-md md:rounded-br-md hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'>Toppers</button>
+
+        <button onclick='switchBg()' id='switchBg'
+            class='button float-left md:float-right hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'>Background</button>
+        <button onclick='switchG()' id='switchG'
+            class='button baseB float-left md:float-right hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'>Garland</button>
+        <button onclick='switchTr()' id='switchTr'
+            class='button baseB float-left md:float-right md:rounded-tl-md md:rounded-bl-md md:border-l-2 md:bg-lightGreen/90 md:border-gray-400/90'>Trees</button>
+    </div>
+
+    <div id='decorSelector'
+        class='hidden md:block bg-gray-100/90 border-x-2 md:border-gray-400/90 absolute h-full overflow-y-auto z-[60] px-3'>
+
+        <button class='md:hidden absolute text-xl text-gray-600 top-0 right-0 m-5' onclick='closeSelector()'><i
+                class='fa-regular fa-circle-xmark' aria-label='Close' title='Close'></i></button>
+
+        <button class='selectDecor text-gray-600 bg-lightGreen/90 border-gray-400/90 pb-1.5' id='random'
+            onclick='select("random.png")'>
+            <i class='fa-solid fa-shuffle text-[2.55rem]' aria-label='Random decoration' title='Random decoration'></i>
+        </button>
+
+        <hr class='border-gray-400/90 border m-2 w-5/6'>
+
+        <div id='ornDiv' class='dDiv block'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-red'
+                onclick='select("ornament-red.png")'> <img id='ornament-red.png' width='60' height='60'
+                    src='ornament-red.png' alt='Red ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-orange'
+                onclick='select("ornament-orange.png")'> <img id='ornament-orange.png' width='60' height='60'
+                    src='ornament-orange.png' alt='Orange ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-yellow'
+                onclick='select("ornament-yellow.png")'> <img id='ornament-yellow.png' width='60' height='60'
+                    src='ornament-yellow.png' alt='Yellow ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-chartreuse' onclick='select("ornament-chartreuse.png")'> <img id='ornament-chartreuse.png'
+                    width='60' height='60' src='ornament-chartreuse.png' alt='Chartreuse ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-green'
+                onclick='select("ornament-green.png")'> <img id='ornament-green.png' width='60' height='60'
+                    src='ornament-green.png' alt='Green ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-cyan'
+                onclick='select("ornament-cyan.png")'> <img id='ornament-cyan.png' width='60' height='60'
+                    src='ornament-cyan.png' alt='Cyan ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-blue'
+                onclick='select("ornament-blue.png")'> <img id='ornament-blue.png' width='60' height='60'
+                    src='ornament-blue.png' alt='Blue ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-purple'
+                onclick='select("ornament-purple.png")'> <img id='ornament-purple.png' width='60' height='60'
+                    src='ornament-purple.png' alt='Purple ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-donut'
+                onclick='select("ornament-donut.png")'> <img id='ornament-donut.png' width='60' height='60'
+                    src='ornament-donut.png' alt='Donut ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-pink'
+                onclick='select("ornament-pink.png")'> <img id='ornament-pink.png' width='60' height='60'
+                    src='ornament-pink.png' alt='Pink ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-brown'
+                onclick='select("ornament-brown.png")'> <img id='ornament-brown.png' width='60' height='60'
+                    src='ornament-brown.png' alt='Brown ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-white'
+                onclick='select("ornament-white.png")'> <img id='ornament-white.png' width='60' height='60'
+                    src='ornament-white.png' alt='White ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-silver'
+                onclick='select("ornament-silver.png")'> <img id='ornament-silver.png' width='60' height='60'
+                    src='ornament-silver.png' alt='Silver ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-black'
+                onclick='select("ornament-black.png")'> <img id='ornament-black.png' width='60' height='60'
+                    src='ornament-black.png' alt='Black ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-year-current' onclick='select("ornament-year-current.png")'> <img
+                    id='ornament-year-current.png' width='60' height='60' src='ornament-year-current.png'
+                    alt="New year's ornament"> </button>
+            <hr class='border-gray-400/90 border m-2 w-5/6'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-dualcolor-red-white' onclick='select("ornament-dualcolor-red-white.png")'>
+                <img id='ornament-dualcolor-red-white.png' width='60' height='60' src='ornament-dualcolor-red-white.png'
+                    alt='Red and white ornament'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-dualcolor-orange-white' onclick='select("ornament-dualcolor-orange-white.png")'>
+                <img id='ornament-dualcolor-orange-white.png' width='60' height='60'
+                    src='ornament-dualcolor-orange-white.png' alt='Orange and white ornament'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-dualcolor-gold-white' onclick='select("ornament-dualcolor-gold-white.png")'>
+                <img id='ornament-dualcolor-gold-white.png' width='60' height='60'
+                    src='ornament-dualcolor-gold-white.png' alt='Gold and white ornament'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-dualcolor-green-white' onclick='select("ornament-dualcolor-green-white.png")'>
+                <img id='ornament-dualcolor-green-white.png' width='60' height='60'
+                    src='ornament-dualcolor-green-white.png' alt='Green and white ornament'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-dualcolor-light-blue-white' onclick='select("ornament-dualcolor-light-blue-white.png")'>
+                <img id='ornament-dualcolor-light-blue-white.png' width='60' height='60'
+                    src='ornament-dualcolor-light-blue-white.png' alt='Light blue and white ornament'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-dualcolor-blue-white' onclick='select("ornament-dualcolor-blue-white.png")'>
+                <img id='ornament-dualcolor-blue-white.png' width='60' height='60'
+                    src='ornament-dualcolor-blue-white.png' alt='Blue and white ornament'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-dualcolor-purple-white' onclick='select("ornament-dualcolor-purple-white.png")'>
+                <img id='ornament-dualcolor-purple-white.png' width='60' height='60'
+                    src='ornament-dualcolor-purple-white.png' alt='Purple and white ornament'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-dualcolor-pink-white' onclick='select("ornament-dualcolor-pink-white.png")'>
+                <img id='ornament-dualcolor-pink-white.png' width='60' height='60'
+                    src='ornament-dualcolor-pink-white.png' alt='Pink and white ornament'> </button>
+            <hr class='border-gray-400/90 border m-2 w-5/6'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-sparkling-red' onclick='select("ornament-sparkling-red.png")'>
+                <img id='ornament-sparkling-red.png' width='60' height='60' src='ornament-sparkling-red.png'
+                    alt='Sparkling red ornament'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-sparkling-orange' onclick='select("ornament-sparkling-orange.png")'>
+                <img id='ornament-sparkling-orange.png' width='60' height='60' src='ornament-sparkling-orange.png'
+                    alt='Sparkling orange ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-sparkling-gold' onclick='select("ornament-sparkling-gold.png")'>
+                <img id='ornament-sparkling-gold.png' width='60' height='60' src='ornament-sparkling-gold.png'
+                    alt='Sparkling gold ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-sparkling-green' onclick='select("ornament-sparkling-green.png")'>
+                <img id='ornament-sparkling-green.png' width='60' height='60' src='ornament-sparkling-green.png'
+                    alt='Sparkling green ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-sparkling-light-blue' onclick='select("ornament-sparkling-light-blue.png")'>
+                <img id='ornament-sparkling-light-blue.png' width='60' height='60'
+                    src='ornament-sparkling-light-blue.png' alt='Sparkling light blue ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-sparkling-blue' onclick='select("ornament-sparkling-blue.png")'>
+                <img id='ornament-sparkling-blue.png' width='60' height='60' src='ornament-sparkling-blue.png'
+                    alt='Sparkling blue ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-sparkling-purple' onclick='select("ornament-sparkling-purple.png")'>
+                <img id='ornament-sparkling-purple.png' width='60' height='60' src='ornament-sparkling-purple.png'
+                    alt='Sparkling purple ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-sparkling-pink' onclick='select("ornament-sparkling-pink.png")'>
+                <img id='ornament-sparkling-pink.png' width='60' height='60' src='ornament-sparkling-pink.png'
+                    alt='Sparkling pink ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-sparkling-white' onclick='select("ornament-sparkling-white.png")'>
+                <img id='ornament-sparkling-white.png' width='60' height='60' src='ornament-sparkling-white.png'
+                    alt='Sparkling white ornament'>
+            </button>
+            <hr class='border-gray-400/90 border m-2 w-5/6'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-icicle'
+                onclick='select("ornament-icicle.png")'>
+                <img id='ornament-icicle.png' width='60' height='60' src='ornament-icicle.png' alt='Icicle ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-bell'
+                onclick='select("ornament-bell.png")'>
+                <img id='ornament-bell.png' width='60' height='60' src='ornament-bell.png' alt='Bell ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-snowman'
+                onclick='select("ornament-snowman.png")'>
+                <img id='ornament-snowman.png' width='60' height='60' src='ornament-snowman.png' alt='Snowman ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-cookie'
+                onclick='select("ornament-cookie.png")'>
+                <img id='ornament-cookie.png' width='60' height='60' src='ornament-cookie.png' alt='Cookie ornament'>
+            </button>
+        </div>
+
+        <div id='caneDiv' class='dDiv hidden'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-red-right' onclick='select("candy-cane-red-right.png")'> <img
+                    id='candy-cane-red-right.png' width='60' height='60' src='candy-cane-red-right.png'
+                    alt='Red candy cane (right)'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-red-left' onclick='select("candy-cane-red-left.png")'> <img id='candy-cane-red-left.png'
+                    width='60' height='60' src='candy-cane-red-left.png' alt='Red candy cane (left)'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-green-right' onclick='select("candy-cane-green-right.png")'>
+                <img id='candy-cane-green-right.png' width='60' height='60' src='candy-cane-green-right.png'
+                    alt='Green candy cane (right)'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-green-left' onclick='select("candy-cane-green-left.png")'> <img
+                    id='candy-cane-green-left.png' width='60' height='60' src='candy-cane-green-left.png'
+                    alt='Green candy cane (left)'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-red-green-right' onclick='select("candy-cane-red-green-right.png")'>
+                <img id='candy-cane-red-green-right.png' width='60' height='60' src='candy-cane-red-green-right.png'
+                    alt='Red and green candy cane (right)'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-red-green-left' onclick='select("candy-cane-red-green-left.png")'> <img
+                    id='candy-cane-red-green-left.png' width='60' height='60' src='candy-cane-red-green-left.png'
+                    alt='Red and green candy cane (left)'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-pink-right' onclick='select("candy-cane-pink-right.png")'> <img
+                    id='candy-cane-pink-right.png' width='60' height='60' src='candy-cane-pink-right.png'
+                    alt='Piink candy cane (right)'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-pink-left' onclick='select("candy-cane-pink-left.png")'> <img
+                    id='candy-cane-pink-left.png' width='60' height='60' src='candy-cane-pink-left.png'
+                    alt='Pink candy cane (left)'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-yellow-right' onclick='select("candy-cane-yellow-right.png")'>
+                <img id='candy-cane-yellow-right.png' width='60' height='60' src='candy-cane-yellow-right.png'
+                    alt='Yellow candy cane (right)'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-yellow-left' onclick='select("candy-cane-yellow-left.png")'>
+                <img id='candy-cane-yellow-left.png' width='60' height='60' src='candy-cane-yellow-left.png'
+                    alt='Yellow candy cane (left)'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-pink-yellow-right' onclick='select("candy-cane-pink-yellow-right.png")'>
+                <img id='candy-cane-pink-yellow-right.png' width='60' height='60' src='candy-cane-pink-yellow-right.png'
+                    alt='Pink and yellow candy cane (right)'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-pink-yellow-left' onclick='select("candy-cane-pink-yellow-left.png")'>
+                <img id='candy-cane-pink-yellow-left.png' width='60' height='60' src='candy-cane-pink-yellow-left.png'
+                    alt='Pink and yellow candy cane (lft)'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-rainbow-right' onclick='select("candy-cane-rainbow-right.png")'>
+                <img id='candy-cane-rainbow-right.png' width='60' height='60' src='candy-cane-rainbow-right.png'
+                    alt='Rainbow candy cane (right)'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-rainbow-left' onclick='select("candy-cane-rainbow-left.png")'>
+                <img id='candy-cane-rainbow-left.png' width='60' height='60' src='candy-cane-rainbow-left.png'
+                    alt='Rainbow candy cane (left)'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-zebra-right' onclick='select("candy-cane-zebra-right.png")'>
+                <img id='candy-cane-zebra-right.png' width='60' height='60' src='candy-cane-zebra-right.png'
+                    alt='Black and white candy cane (right)'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='candy-cane-zebra-left' onclick='select("candy-cane-zebra-left.png")'>
+                <img id='candy-cane-zebra-left.png' width='60' height='60' src='candy-cane-zebra-left.png'
+                    alt='Black and white candy cane (left)'>
+            </button>
+        </div>
+
+        <div id='flowerDiv' class='dDiv hidden'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='poinsettia-red'
+                onclick='select("poinsettia-red.png")'> <img id='poinsettia-red.png' width='60' height='60'
+                    src='poinsettia-red.png' alt='Red poinsettia'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='poinsettia-orange' onclick='select("poinsettia-orange.png")'>
+                <img id='poinsettia-orange.png' width='60' height='60' src='poinsettia-orange.png'
+                    alt='Orange poinsettia'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='poinsettia-yellow' onclick='select("poinsettia-yellow.png")'>
+                <img id='poinsettia-yellow.png' width='60' height='60' src='poinsettia-yellow.png'
+                    alt='Yellow poinsettia'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='poinsettia-cyan'
+                onclick='select("poinsettia-cyan.png")'> <img id='poinsettia-cyan.png' width='60' height='60'
+                    src='poinsettia-cyan.png' alt='Cyan poinsettia'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='poinsettia-blue'
+                onclick='select("poinsettia-blue.png")'> <img id='poinsettia-blue.png' width='60' height='60'
+                    src='poinsettia-blue.png' alt='Blue poinsettia'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='poinsettia-purple' onclick='select("poinsettia-purple.png")'>
+                <img id='poinsettia-purple.png' width='60' height='60' src='poinsettia-purple.png'
+                    alt='Purple poinsettia'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='poinsettia-pink'
+                onclick='select("poinsettia-pink.png")'> <img id='poinsettia-pink.png' width='60' height='60'
+                    src='poinsettia-pink.png' alt='Pink poinsettia'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='poinsettia-white'
+                onclick='select("poinsettia-white.png")'>
+                <img id='poinsettia-white.png' width='60' height='60' src='poinsettia-white.png' alt='White poinsettia'>
+            </button>
+            <hr class='border-gray-400/90 border m-2 w-5/6'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='hibiscus-red'
+                onclick='select("hibiscus-red.png")'> <img id='hibiscus-red.png' width='60' height='60'
+                    src='hibiscus-red.png' alt='Red hibiscus'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='hibiscus-orange'
+                onclick='select("hibiscus-orange.png")'> <img id='hibiscus-orange.png' width='60' height='60'
+                    src='hibiscus-orange.png' alt='Orange hibiscus'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='hibiscus-yellow'
+                onclick='select("hibiscus-yellow.png")'> <img id='hibiscus-yellow.png' width='60' height='60'
+                    src='hibiscus-yellow.png' alt='Yellow hibiscus'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='hibiscus-cyan'
+                onclick='select("hibiscus-cyan.png")'> <img id='hibiscus-cyan.png' width='60' height='60'
+                    src='hibiscus-cyan.png' alt='Cyan hibiscus'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='hibiscus-blue'
+                onclick='select("hibiscus-blue.png")'> <img id='hibiscus-blue.png' width='60' height='60'
+                    src='hibiscus-blue.png' alt='Blue hibiscus'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='hibiscus-purple'
+                onclick='select("hibiscus-purple.png")'> <img id='hibiscus-purple.png' width='60' height='60'
+                    src='hibiscus-purple.png' alt='Purple hibiscus'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='hibiscus-pink'
+                onclick='select("hibiscus-pink.png")'> <img id='hibiscus-pink.png' width='60' height='60'
+                    src='hibiscus-pink.png' alt='Pink hibiscus'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='hibiscus-white'
+                onclick='select("hibiscus-white.png")'> <img id='hibiscus-white.png' width='60' height='60'
+                    src='hibiscus-white.png' alt='White hibiscus'>
+            </button>
+        </div>
+
+        <div id='lightDiv' class='dDiv hidden'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='light-red'
+                onclick='select("light-red.png")'> <img id='light-red.png' width='27' height='30' src='light-red.png'
+                    alt='Red light'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='light-orange'
+                onclick='select("light-orange.png")'> <img id='light-orange.png' width='27' height='30'
+                    src='light-orange.png' alt='Orange light'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='light-yellow'
+                onclick='select("light-yellow.png")'> <img id='light-yellow.png' width='27' height='30'
+                    src='light-yellow.png' alt='Yellow light'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='light-green'
+                onclick='select("light-green.png")'> <img id='light-green.png' width='27' height='30'
+                    src='light-green.png' alt='Green light'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='light-cyan'
+                onclick='select("light-cyan.png")'> <img id='light-cyan.png' width='27' height='30' src='light-cyan.png'
+                    alt='Cyan light'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='light-blue'
+                onclick='select("light-blue.png")'> <img id='light-blue.png' width='27' height='30' src='light-blue.png'
+                    alt='Blue light'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='light-purple'
+                onclick='select("light-purple.png")'> <img id='light-purple.png' width='27' height='30'
+                    src='light-purple.png' alt='Purple light'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='light-pink'
+                onclick='select("light-pink.png")'> <img id='light-pink.png' width='27' height='30' src='light-pink.png'
+                    alt='Pink light'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='light-white'
+                onclick='select("light-white.png")'> <img id='light-white.png' width='27' height='30'
+                    src='light-white.png' alt='White light'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='light-rainbow'
+                onclick='select("light-rainbow.png")'> <img id='light-rainbow.png' width='27' height='30'
+                    src='light-rainbow.png' alt='Rainbow light'>
+            </button>
+        </div>
+
+        <div id='presDiv' class='dDiv hidden'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='present-red'
+                onclick='select("present-red.png")'> <img id='present-red.png' width='80' height='80'
+                    src='present-red.png' alt='Red present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='present-red-long'
+                onclick='select("present-red-long.png")'>
+                <img id='present-red-long.png' width='96' height='68' src='present-red-long.png' alt='Long red present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='present-red-tall'
+                onclick='select("present-red-tall.png")'>
+                <img id='present-red-tall.png' width='52' height='96' src='present-red-tall.png' alt='Tall red present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='present-yellow'
+                onclick='select("present-yellow.png")'> <img id='present-yellow.png' width='80' height='80'
+                    src='present-yellow.png' alt='Yellow present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-yellow-long' onclick='select("present-yellow-long.png")'> <img id='present-yellow-long.png'
+                    width='96' height='68' src='present-yellow-long.png' alt='Long yellow present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-yellow-tall' onclick='select("present-yellow-tall.png")'> <img id='present-yellow-tall.png'
+                    width='52' height='96' src='present-yellow-tall.png' alt='Tall yellow present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='present-green'
+                onclick='select("present-green.png")'> <img id='present-green.png' width='80' height='80'
+                    src='present-green.png' alt='Green present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-green-long' onclick='select("present-green-long.png")'>
+                <img id='present-green-long.png' width='96' height='68' src='present-green-long.png'
+                    alt='Long green present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-green-tall' onclick='select("present-green-tall.png")'>
+                <img id='present-green-tall.png' width='52' height='96' src='present-green-tall.png'
+                    alt='Tall green present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='present-blue'
+                onclick='select("present-blue.png")'> <img id='present-blue.png' width='80' height='80'
+                    src='present-blue.png' alt='Blue present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-blue-long' onclick='select("present-blue-long.png")'>
+                <img id='present-blue-long.png' width='96' height='68' src='present-blue-long.png'
+                    alt='Long blue present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-blue-tall' onclick='select("present-blue-tall.png")'>
+                <img id='present-blue-tall.png' width='52' height='96' src='present-blue-tall.png'
+                    alt='Tall blue present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-dark-blue' onclick='select("present-dark-blue.png")'>
+                <img id='present-dark-blue.png' width='80' height='80' src='present-dark-blue.png'
+                    alt='Dark blue present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-dark-blue-long' onclick='select("present-dark-blue-long.png")'>
+                <img id='present-dark-blue-long.png' width='96' height='68' src='present-dark-blue-long.png'
+                    alt='Long dark blue present'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-dark-blue-tall' onclick='select("present-dark-blue-tall.png")'>
+                <img id='present-dark-blue-tall.png' width='52' height='96' src='present-dark-blue-tall.png'
+                    alt='Tall dark blue present'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='present-purple'
+                onclick='select("present-purple.png")'> <img id='present-purple.png' width='80' height='80'
+                    src='present-purple.png' alt='Purple present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-purple-long' onclick='select("present-purple-long.png")'> <img id='present-purple-long.png'
+                    width='96' height='68' src='present-purple-long.png' alt='Long purple present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-purple-tall' onclick='select("present-purple-tall.png")'> <img id='present-purple-tall.png'
+                    width='52' height='96' src='present-purple-tall.png' alt='Tall purple preseent'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='present-white'
+                onclick='select("present-white.png")'> <img id='present-white.png' width='80' height='80'
+                    src='present-white.png' alt='White present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-white-long' onclick='select("present-white-long.png")'> <img id='present-white-long.png'
+                    width='96' height='68' src='present-white-long.png' alt='Long white present'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='present-white-tall' onclick='select("present-white-tall.png")'> <img id='present-white-tall.png'
+                    width='52' height='96' src='present-white-tall.png' alt='Tall white preseent'>
+            </button>
+        </div>
+
+        <div id='topDiv' class='dDiv hidden'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-gold-1'
+                onclick='select("star-gold-1.png")'> <img id='star-gold-1.png' width='60' height='60'
+                    src='star-gold-1.png' alt='Gold star 1'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-red-1'
+                onclick='select("star-red-1.png")'> <img id='star-red-1.png' width='60' height='60' src='star-red-1.png'
+                    alt='Red star 1'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-green-1'
+                onclick='select("star-green-1.png")'> <img id='star-green-1.png' width='60' height='60'
+                    src='star-green-1.png' alt='Green star 1'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-blue-1'
+                onclick='select("star-blue-1.png")'> <img id='star-blue-1.png' width='60' height='60'
+                    src='star-blue-1.png' alt='Blue star 1'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-white-1'
+                onclick='select("star-white-1.png")'> <img id='star-white-1.png' width='60' height='60'
+                    src='star-white-1.png' alt='White star 1'>
+            </button>
+            <hr class='border-gray-400/90 border m-2 w-5/6'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-gold-2'
+                onclick='select("star-gold-2.png")'> <img id='star-gold-2.png' width='60' height='60'
+                    src='star-gold-2.png' alt='Gold star 2'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-red-2'
+                onclick='select("star-red-2.png")'> <img id='star-red-2.png' width='60' height='60' src='star-red-2.png'
+                    alt='Red star 2'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-green-2'
+                onclick='select("star-green-2.png")'> <img id='star-green-2.png' width='60' height='60'
+                    src='star-green-2.png' alt='Green star 2'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-blue-2'
+                onclick='select("star-blue-2.png")'> <img id='star-blue-2.png' width='60' height='60'
+                    src='star-blue-2.png' alt='Blue star 2'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-white-2'
+                onclick='select("star-white-2.png")'> <img id='star-white-2.png' width='60' height='60'
+                    src='star-white-2.png' alt='White star 2'>
+            </button>
+            <hr class='border-gray-400/90 border m-2 w-5/6'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-gold-3'
+                onclick='select("star-gold-3.png")'> <img id='star-gold-3.png' width='60' height='60'
+                    src='star-gold-3.png' alt='Gold star 3'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-red-3'
+                onclick='select("star-red-3.png")'> <img id='star-red-3.png' width='60' height='60' src='star-red-3.png'
+                    alt='Red star 3'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-green-3'
+                onclick='select("star-green-3.png")'> <img id='star-green-3.png' width='60' height='60'
+                    src='star-green-3.png' alt='Green star 3'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-blue-3'
+                onclick='select("star-blue-3.png")'> <img id='star-blue-3.png' width='60' height='60'
+                    src='star-blue-3.png' alt='Blue star 3'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-white-3'
+                onclick='select("star-white-3.png")'> <img id='star-white-3.png' width='60' height='60'
+                    src='star-white-3.png' alt='White star 3'>
+            </button>
+            <hr class='border-gray-400/90 border m-2 w-5/6'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-gold-4'
+                onclick='select("star-gold-4.png")'> <img id='star-gold-4.png' width='60' height='60'
+                    src='star-gold-4.png' alt='Gold star 4'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-red-4'
+                onclick='select("star-red-4.png")'> <img id='star-red-4.png' width='60' height='60' src='star-red-4.png'
+                    alt='Red star 4'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-green-4'
+                onclick='select("star-green-4.png")'> <img id='star-green-4.png' width='60' height='60'
+                    src='star-green-4.png' alt='Green star 4'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-blue-4'
+                onclick='select("star-blue-4.png")'> <img id='star-blue-4.png' width='60' height='60'
+                    src='star-blue-4.png' alt='Blue star 4'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='star-white-4'
+                onclick='select("star-white-4.png")'> <img id='star-white-4.png' width='60' height='60'
+                    src='star-white-4.png' alt='White star 4'>
+            </button>
+            <hr class='border-gray-400/90 border m-2 w-5/6'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='bow-gold'
+                onclick='select("bow-gold.png")'> <img id='bow-gold.png' width='80' height='80' src='bow-gold.png'
+                    alt='Gold bow'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='bow-red'
+                onclick='select("bow-red.png")'> <img id='bow-red.png' width='80' height='80' src='bow-red.png'
+                    alt='Red bow'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='bow-green'
+                onclick='select("bow-green.png")'> <img id='bow-green.png' width='80' height='80' src='bow-green.png'
+                    alt='Green bow'> </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='bow-blue'
+                onclick='select("bow-blue.png")'> <img id='bow-blue.png' width='80' height='80' src='bow-blue.png'
+                    alt='Blue bow'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='bow-white'
+                onclick='select("bow-white.png")'> <img id='bow-white.png' width='80' height='80' src='bow-white.png'
+                    alt='White bow'>
+            </button>
+            <hr class='border-gray-400/90 border m-2 w-5/6'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='finial-gold'
+                onclick='select("finial-gold.png")'> <img id='finial-gold.png' width='80' height='80'
+                    src='finial-gold.png' alt='Gold finial'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='finial-red'
+                onclick='select("finial-red.png")'> <img id='finial-red.png' width='80' height='80' src='finial-red.png'
+                    alt='Red finial'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='finial-green'
+                onclick='select("finial-green.png")'> <img id='finial-green.png' width='80' height='80'
+                    src='finial-green.png' alt='Green finial'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='finial-blue'
+                onclick='select("finial-blue.png")'> <img id='finial-blue.png' width='80' height='80'
+                    src='finial-blue.png' alt='Blue finial'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='finial-white'
+                onclick='select("finial-white.png")'> <img id='finial-white.png' width='80' height='80'
+                    src='finial-white.png' alt='White finial'>
+            </button>
+        </div>
+
+        <div id='secretDiv' class='dDiv hidden'>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-hearts'
+                onclick='select("ornament-hearts.png")'> <img id='ornament-hearts.png' width='60' height='60'
+                    src='ornament-hearts.png' alt='Hearts ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-uwu'
+                onclick='select("ornament-uwu.png")'> <img id='ornament-uwu.png' width='60' height='60'
+                    src='ornament-uwu.png' alt='UwU ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-tree'
+                onclick='select("ornament-tree.png")'> <img id='ornament-tree.png' width='60' height='60'
+                    src='ornament-tree.png' alt='Tree ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='ornament-star'
+                onclick='select("ornament-star.png")'> <img id='ornament-star.png' width='60' height='60'
+                    src='ornament-star.png' alt='Star ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-hangy-orange' onclick='select("ornament-hangy-orange.png")'> <img
+                    id='ornament-hangy-orange.png' width='60' height='60' src='ornament-hangy-orange.png'
+                    alt='Hangy Orange Ornament'>
+            </button>
+            <button class='selectDecor hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='ornament-dualcolor-red-gold' onclick='select("ornament-dualcolor-red-gold.png")'>
+                <img id='ornament-dualcolor-red-gold.png' width='60' height='60' src='ornament-dualcolor-red-gold.png'
+                    alt='Red and gold ornament'> </button>
+        </div>
+
+    </div>
+
+    <div id='baseSelector'
+        class='hidden md:block bg-gray-100/90 border-x-2 md:border-gray-400/90 absolute right-0 h-full overflow-y-auto z-[60] px-3'>
+
+        <button class='md:hidden absolute text-xl text-gray-600 top-0 right-0 m-5' onclick='closeBaseSelector()'><i
+                class='fa-regular fa-circle-xmark' aria-label='Close' title='Close'></i></button>
+
+        <div id='treeDiv' class='bDiv block pr-10 md:pr-0'>
+            <button class='selectTree hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='tree-red'
+                onclick='selectTree("tree-red.png")'> <img id='tree-red.png' width='60' height='90' src='tree-red.png'
+                    alt='Red tree'>
+            </button>
+            <button class='selectTree hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='tree-orange'
+                onclick='selectTree("tree-orange.png")'> <img id='tree-orange.png' width='60' height='90'
+                    src='tree-orange.png' alt='Orange tree'>
+            </button>
+            <button class='selectTree hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='tree-yellow'
+                onclick='selectTree("tree-yellow.png")'> <img id='tree-yellow.png' width='60' height='90'
+                    src='tree-yellow.png' alt='Yellow tree'>
+            </button>
+            <button class='selectTree bg-lightGreen/90 border-gray-400/90' id='tree' onclick='selectTree("tree.png")'>
+                <img id='tree.png' width='60' height='90' src='tree.png' alt='Green tree'>
+            </button>
+            <button class='selectTree hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='tree-light-blue'
+                onclick='selectTree("tree-light-blue.png")'> <img id='tree-light-blue.png' width='60' height='90'
+                    src='tree-light-blue.png' alt='Light blue tree'>
+            </button>
+            <button class='selectTree hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='tree-blue'
+                onclick='selectTree("tree-blue.png")'> <img id='tree-blue.png' width='60' height='90'
+                    src='tree-blue.png' alt='Blue tree'>
+            </button>
+            <button class='selectTree hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='tree-purple'
+                onclick='selectTree("tree-purple.png")'> <img id='tree-purple.png' width='60' height='90'
+                    src='tree-purple.png' alt='Purple tree'>
+            </button>
+            <button class='selectTree hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='tree-pink'
+                onclick='selectTree("tree-pink.png")'> <img id='tree-pink.png' width='60' height='90'
+                    src='tree-pink.png' alt='Pink tree'>
+            </button>
+            <button class='selectTree hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='tree-white'
+                onclick='selectTree("tree-white.png")'> <img id='tree-white.png' width='60' height='90'
+                    src='tree-white.png' alt='White tree'>
+            </button>
+        </div>
+
+        <div id='garlandDiv' class='bDiv hidden'>
+            <button class='selectGar text-gray-600 bg-lightGreen/90 border-gray-400/90 pb-1.5' id='noGarland'
+                onclick='selectGar("none")'> <i class='fa-solid fa-ban text-[2.55rem]' aria-label='No garland'
+                    title='No garland'></i>
+            </button>
+
+            <hr class='border-gray-400/90 border m-2 w-5/6'>
+
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-red'
+                onclick='selectGar("garland-red.png")'> <img id='garland-red.png' width='60' height='90'
+                    src='garland-red.png' alt='Red garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-red-green'
+                onclick='selectGar("garland-red-green.png")'>
+                <img id='garland-red-green.png' width='60' height='90' src='garland-red-green.png'
+                    alt='Red and Green garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-red-white'
+                onclick='selectGar("garland-red-white.png")'>
+                <img id='garland-red-white.png' width='60' height='90' src='garland-red-white.png'
+                    alt='Red and white garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-orange'
+                onclick='selectGar("garland-orange.png")'> <img id='garland-orange.png' width='60' height='90'
+                    src='garland-orange.png' alt='Orange garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='garland-orange-white' onclick='selectGar("garland-orange-white.png")'> <img
+                    id='garland-orange-white.png' width='60' height='90' src='garland-orange-white.png'
+                    alt='Orange and white garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-yellow'
+                onclick='selectGar("garland-yellow.png")'> <img id='garland-yellow.png' width='60' height='90'
+                    src='garland-yellow.png' alt='Yellow garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='garland-yellow-white' onclick='selectGar("garland-yellow-white.png")'> <img
+                    id='garland-yellow-white.png' width='60' height='90' src='garland-yellow-white.png'
+                    alt='Yellow and white garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-green'
+                onclick='selectGar("garland-green.png")'> <img id='garland-green.png' width='60' height='90'
+                    src='garland-green.png' alt='Green garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='garland-green-white' onclick='selectGar("garland-green-white.png")'> <img
+                    id='garland-green-white.png' width='60' height='90' src='garland-green-white.png'
+                    alt='Green and white garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-light-blue'
+                onclick='selectGar("garland-light-blue.png")'> <img id='garland-light-blue.png' width='60' height='90'
+                    src='garland-light-blue.png' alt='Light blue garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='garland-light-blue-white' onclick='selectGar("garland-light-blue-white.png")'> <img
+                    id='garland-light-blue-white.png' width='60' height='90' src='garland-light-blue-white.png'
+                    alt='Light blue and white garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-blue'
+                onclick='selectGar("garland-blue.png")'> <img id='garland-blue.png' width='60' height='90'
+                    src='garland-blue.png' alt='Blue garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-blue-white'
+                onclick='selectGar("garland-blue-white.png")'>
+                <img id='garland-blue-white.png' width='60' height='90' src='garland-blue-white.png'
+                    alt='Blue and white garland'>
+            </button>
+
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-purple'
+                onclick='selectGar("garland-purple.png")'> <img id='garland-purple.png' width='60' height='90'
+                    src='garland-purple.png' alt='Purple garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90'
+                id='garland-purple-white' onclick='selectGar("garland-purple-white.png")'> <img
+                    id='garland-purple-white.png' width='60' height='90' src='garland-purple-white.png'
+                    alt='Purple and white garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-pink'
+                onclick='selectGar("garland-pink.png")'> <img id='garland-pink.png' width='60' height='90'
+                    src='garland-pink.png' alt='Pink garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-pink-white'
+                onclick='selectGar("garland-pink-white.png")'>
+                <img id='garland-pink-white.png' width='60' height='90' src='garland-pink-white.png'
+                    alt='Pink and white garland'>
+            </button>
+            <button class='selectGar hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90' id='garland-white'
+                onclick='selectGar("garland-white.png")'> <img id='garland-white.png' width='60' height='90'
+                    src='garland-white.png' alt='White garland'>
+            </button>
+        </div>
+    </div>
+
+    <div class='hidden md:flex absolute z-[60] gap-3 m-3 transition-all' id='optionsDiv'>
+        <button
+            class='leading-none bg-gray-100/90 hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90 border-gray-400/90 border-2 text-gray-600 rounded-md px-2.5 py-2 transition-all'
+            onclick='toggleB()' id='hide'><i id='hideI' class='fa-solid fa-angle-up text-xl p-0 m-0'
+                aria-label='Hide/show menu' title='Hide/show menu'></i></button>
+        <button
+            class='leading-none text-lg bg-gray-100/90 hover:enabled:bg-gray-200/90 active:enabled:bg-gray-300/90 border-gray-400/90 border-2 text-gray-600 rounded-md px-3 py-2 transition-all'
+            id='sizeBtn' onclick='changeSize()'>Size: Normal</button>
+    </div>
+
+    <div id='canvases' class='relative'>
+
+        <canvas id='canvas5'
+            class='absolute top-0 left-0 z-50 opacity-50 active:opacity-60 transition-all cursor-pointer'>
+            <!-- hover decor canvas -->
+        </canvas>
+
+        <canvas id='canvas' class='absolute top-0 left-0 z-40'>
+            <!-- decor canvas -->
+        </canvas>
+
+        <canvas id='canvas2' class='absolute top-0 left-0 z-20'>
+            <!-- tree canvas -->
+        </canvas>
+
+        <canvas id='canvas3' class='absolute top-0 left-0 z-10'>
+            <!-- garland canvas -->
+        </canvas>
+
+        <canvas id='canvas4' class='absolute top-0 left-0'>
+            <!-- bg canvas -->
+        </canvas>
+
+    </div>
+
+</body>
+
+</html>
+
+<script src='script.js'></script>
